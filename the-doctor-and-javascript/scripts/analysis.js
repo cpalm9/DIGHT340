@@ -73,3 +73,60 @@ console.groupEnd();
 console.groupCollapsed('Movie ratings map()');
   topRated.map(movie => console.log(`${movie.title} [${movie.actor}]`))
 console.groupEnd();
+
+// .reduce()
+console.groupCollapsed('Array.reduce()');
+  const numbers = [13,126,15,42,1026,255];
+  const sumNumbers = numbers.reduce((total, num) => total + num, 0);
+  console.log(sumNumbers);
+console.groupEnd();
+
+console.groupCollapsed('reduce actors array into total number of years');
+  const sumTenure = actors.reduce((total, actor) => {
+    let diff = 1;
+    if (actor.tenure_end !== null && actor.tenure_end !== actor.tenure_start){
+      diff = (actor.tenure_end - actor.tenure_start);
+    }
+    return total + diff
+  }, 0);
+  console.log(sumTenure);
+console.groupEnd();
+
+console.groupCollapsed('Doctor name count in top rated episodes');
+  const fixComma = topRated.map((episode) => {
+    if(episode.actor.includes(',')){
+      var newActor1 = episode.actor.split(', ')[0]
+      var newActor2 = episode.actor.split(', ')[1]
+      topRated.push({
+        title: episode.title,
+        actor: newActor1
+      })
+      topRated.push({
+        title: episode.title,
+        actor: newActor2
+      })
+    }
+  })
+  const nameCount = topRated.reduce(
+    (names, episode) => {
+      let foundDoctor = names.find((name)=>{
+        return name.actor === episode.actor
+      });
+      if(!foundDoctor){
+        names.push({
+          actor: episode.actor,
+          count: 0
+        });
+      }
+      foundDoctor = names.find((name)=>{
+        return name.actor === episode.actor
+      });
+      const index = names.indexOf(foundDoctor);
+      names[index].count++;
+
+      return names;
+    },[]
+  ).sort((a,b) => b.count > a.count)
+
+  console.table(nameCount)
+console.groupEnd();
