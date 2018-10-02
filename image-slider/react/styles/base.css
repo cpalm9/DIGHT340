@@ -1,3 +1,8 @@
+:root { 
+  --translateValue: 0; 
+  --rotation: 0;
+}
+
 html,
 body,
 main {
@@ -5,4 +10,61 @@ main {
   width: 100%;
   margin: 0;
   padding: 0;
+}
+
+.slider {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  height: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.wrapper-slides {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  transform: translateX(var(--translateValue));
+  transition: transform ease-out .45s;
+}
+
+.slide {
+  display: inline-block;
+  height: 100vh;
+  width: 100vw;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.slide + .slide { margin-left: -4px; }
+
+.artanis { background-image: url("../images/artanis.jpg"); }
+.johanna { background-image: url("../images/johanna.jpg"); }
+.muradin { background-image: url("../images/muradin.jpg"); }
+.yellowstone {background-image: url("../images/yellowstone.jpg");}
+.gallatin {background-image: url("../images/gallatin.jpg");}
+
+[class^="arrow-"] {
+  position: absolute;
+  top: 50vh;
+  display: block;
+  border-style: solid;
+  border-color: #dad6ca;
+  border-width: 0 10px 10px 0;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 20;
+  transform: rotate(var(--rotation));
+}
+
+.arrow-backward {
+  --rotation: 135deg;
+  left: 1.5%;
+}
+
+.arrow-forward {
+  --rotation: -45deg;
+  right: 1.5%;
 }
