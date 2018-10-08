@@ -1,7 +1,7 @@
-:root { 
+/* :root { 
   --translateValue: 0; 
   --rotation: 0;
-}
+} */
 
 html,
 body,
@@ -12,7 +12,7 @@ main {
   padding: 0;
 }
 
-.slider {
+/* .slider {
   position: relative;
   width: 100%;
   margin: 0 auto;
@@ -67,4 +67,4 @@ main {
 .arrow-forward {
   --rotation: -45deg;
   right: 1.5%;
-}
+} */

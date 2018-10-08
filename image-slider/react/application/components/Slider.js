@@ -1,16 +1,18 @@
 class Slider extends React.Component {
+  styles = {
+    position: 'relative',
+    width: '100%',
+    margin: '0 auto',
+    height: '100%',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap'
+  }
   render() {
     return (
       <div className="slider">
-        <BackArrow/>
-        <div className="wrapper-slides">
-          <div className="slide muradin"></div>
-          <div className="slide johanna"></div>
-          <div className="slide artanis"></div>
-          <div className="slide yellowstone"></div>
-          <div className="slide gallatin"></div>
-        </div>
-        <ForwardArrow/>
+        <Arrow direction={'backward'}/>
+        <SlideWrapper/>
+        <Arrow direction={'forward'}/>
       </div>
     );
   }
