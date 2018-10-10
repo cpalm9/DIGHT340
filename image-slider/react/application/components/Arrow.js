@@ -1,6 +1,5 @@
-const Arrow = ({direction}) => {
-  let rotation = 0;
-  const styles = {
+const Arrow = ({direction, handleClick}) => {
+  const base_styles = {
     position: 'absolute',
     top: '50vh',
     display: 'block',
@@ -11,17 +10,26 @@ const Arrow = ({direction}) => {
     cursor: 'pointer',
     zIndex: '20',
   }
+
+  let position_styles = null
   if(direction === 'backward'){
-    rotation = '135deg'
-    styles['transform'] = `rotate(${rotation})`
-    styles['left'] = '1.5%'
-  } else {
-    rotation = '-45deg'
-    styles['transform'] = `rotate(${rotation})`
-    styles['right'] = '1.5%'
+    position_styles = {
+      left: '1.5%',
+      transform: 'rotate(135deg)',
+    }
+  } else if(direction === 'forward'){
+    position_styles = {
+      right: '1.5%',
+      transform: 'rotate(-45deg)',
+    }
   }
+  const styles = {
+    ...base_styles,
+    ...position_styles,
+  }
+
   return(
-    <div className={`arrow-${direction}`} style={styles}></div>
+    <div className={`arrow-${direction}`} style={styles} onClick={handleClick}></div>
   );
 }
 
