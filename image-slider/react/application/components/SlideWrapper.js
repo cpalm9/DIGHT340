@@ -1,4 +1,4 @@
-const SlideWrapper = ({translateValue, images}) => {
+const SlideWrapper = ({translateValue, images, currentIndex}) => {
   const styles = {
     position: 'relative',
     height: '100%',
