@@ -87,7 +87,7 @@ class Slider extends React.Component {
         break;
       case 82:
         this.shuffleImages(this.state.images)
-        window.location.reload()
+        this.forceUpdate()
         break;
       default:
         break;
