@@ -49,7 +49,7 @@ export default class Pomodoro extends React.Component {
       <React.Fragment>
 
         <h4>{this.state.work ? 'Work Timer' : 'Rest Timer'}</h4>
-        <Button color="primary" onClick={this.handleClick}>Work</Button>&nbsp;&nbsp;
+        <Button color="primary" onClick={this.handleClick} style={{marginRight: '10px'}}>Work</Button>
         <Button color="secondary" onClick={this.handleClick}>Rest</Button>
 
         {this.state.work && <Timer type={'work'} time={this.state.workTimer} timerCompleted={this.timerCompleted} continueTimer={this.state.continueTimer}/>}

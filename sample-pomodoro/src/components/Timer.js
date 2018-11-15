@@ -73,8 +73,8 @@ export default class Timer extends React.Component {
     return (
       <React.Fragment>
         <h3 className="display-5">{this.format(this.state.time)}</h3>
-        <Button color="primary" onClick={this.startTimer}>Start</Button>&nbsp;&nbsp;
-        <Button color="secondary" onClick={this.stopTimer}>Stop</Button>&nbsp;&nbsp;
+        <Button color="primary" onClick={this.startTimer} style={{marginRight: '10px'}}>Start</Button>
+        <Button color="secondary" onClick={this.stopTimer} style={{marginRight: '10px'}}>Stop</Button>
         <Button color="primary" onClick={this.resetTimer}>Reset</Button>
       </React.Fragment>
     );
