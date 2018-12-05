@@ -20,21 +20,23 @@ const styles = theme => ({
   });
 
 const Results = props => {
+    console.log(props.data)
     return (
-    <Grid container spacing={16}>
-        <Grid item xs={12}>
-            <Grid container justify="center" spacing={16}>
-                {
-                    (props.data.length)
-                    ? props.data.map(gif => (
-                        <Gif src={gif.images.fixed_height.url} key={gif.id} />
-                    )) : <NoGifs />
-                
-                }
+        <Grid container spacing={16}>
+            <Grid item xs={12}>
+                <Grid container justify="center" spacing={16}>
+                    {
+                        (props.data.length > 0)
+                        ? props.data.map(gif => (
+                            <Gif src={gif.images.fixed_height.url} key={gif.id} />
+                        )) : (Array.isArray(props.data)) ? <NoGifs/> :<Gif src={props.data.images.fixed_height.url} key={props.data.id} />  
+                    
+                    }
+                </Grid>
             </Grid>
         </Grid>
-    </Grid>
-)}
+    )
+}
 
 Results.proptypes = {
     data: PropTypes.array

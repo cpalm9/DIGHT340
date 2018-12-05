@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import axios from 'axios';
 import Results from './Results';
 import SearchForm from './SearchForm';
-import Checkbox from '@material-ui/core/Checkbox';
+import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Typography from '@material-ui/core/Typography';
 
@@ -13,26 +13,26 @@ class App extends Component {
     this.state = {
       gifs: [],
       loading: true,
-      getTrending: false,
+      getTrending: true,
+      getRandom: false,
+      getSearch: false
     };
   }
 
   componentDidMount() {
     if(this.state.getTrending){
       this.getTrending();
-    } else {
-      this.performSearch();
     }
   }
 
-  handleCheckboxChange = () => {
-    if(!this.state.getTrending){
-      this.setState({getTrending: true})
+  handleTrendingChange = () => {
+      this.setState({getTrending: true, getRandom: false, getSearch: false})
       this.getTrending();
-    } else {
-      this.setState({getTrending: false})
-      this.performSearch()
-    }
+  }
+
+  handleSearchChange = () => {
+      this.setState({getSearch: true, getTrending: false, getRandom: false})
+      this.performSearch();
   }
 
   getTrending = async () => {
@@ -47,6 +47,22 @@ class App extends Component {
       });
     } catch (error) {
       console.error(error);
+    }
+  }
+
+  getRandom = async(limit = 0) => {
+    try {
+      const response = await axios.get('http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&rating=g');
+      const data = await response.data.data;
+      this.setState({
+        gifs: data,
+        loading: false,
+        getRandom: true,
+        getTrending: false,
+        getSearch: false
+      });
+    } catch(error){
+      console.error(error)
     }
   }
 
@@ -65,13 +81,6 @@ class App extends Component {
   }
 
   render() {
-    // console.log(this.state.gifs);
-
-    const gifs = this.state.gifs.map(gif => {
-      return <img key={gif.id} src={gif.images.fixed_width.url} alt={gif.title} />;
-    });
-
-    console.log(gifs);
 
     return (
       <Fragment>
@@ -79,16 +88,36 @@ class App extends Component {
           Giphy Search!
         </Typography>
         <FormControlLabel
-          label="Get Top 25 Trending Gifs?"
           control={
-            <Checkbox
-              checked={this.state.getTrending}
-              onChange={this.handleCheckboxChange}
-            />
+            <Button
+              color='primary'
+              variant="contained"
+              onClick={this.handleTrendingChange}
+              style={{marginLeft: '10px'}}
+            >Get Trending</Button>
           }
-          
         />
-        {!this.state.getTrending ? <SearchForm onChange={this.performSearch}/> : ''}
+        <FormControlLabel
+          control={
+            <Button
+              color="secondary"
+              variant="contained"
+              onClick={this.getRandom}
+              style={{marginLeft: '10px'}}
+            >Get Random Gif</Button>
+          }
+        />
+        <FormControlLabel
+          control={
+            <Button
+              color="secondary"
+              variant="contained"
+              onClick={this.handleSearchChange}
+              style={{marginLeft: '10px'}}
+            >Search</Button>
+          }
+        />
+        {!this.state.getTrending && !this.state.getRandom ? <SearchForm onChange={this.performSearch}/> : ''}
         {
           (this.state.loading)
           ? <p className='loading'>Loading&hellip;</p>
