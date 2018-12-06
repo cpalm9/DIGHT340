@@ -1,4 +1,12 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
+import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import SearchIcon from '@material-ui/icons/Search'
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import {connect} from 'react-redux'
 
 import Actions from './Actions'
@@ -9,33 +17,40 @@ const createMarkup = (rawInfo = null) => {
   }
 };
 
-const App = ({Cards, searchTerm, searchTermChanged}) => (
+const App = ({cards, searchTerm, searchTermChanged}) => (
       <Fragment>
-        <input 
-          type='text'
-          name='search'
-          placeholder='Search Card Names'
-          value={searchTerm} 
-          onChange={e => searchTermChanged(e.target.value)}/>
-        <table border="1">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Flavor</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Cards.map(card => {
+        <TextField
+          id="input-with-icon-textfield"
+          label="Search Card Names"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+          onChange={e => searchTermChanged(e.target.value)}
+          value={searchTerm}
+        />
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Flavor</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {cards.map(card => {
               return card.flavor ? 
                 (
-                  <tr key={card.id}>
-                    <td>{card.name}</td>
-                    <td dangerouslySetInnerHTML={ createMarkup(card.flavor) }></td>
-                  </tr>
+                  <TableRow key={card.id}>
+                    <TableCell>{card.name}</TableCell>
+                    <TableCell dangerouslySetInnerHTML={ createMarkup(card.flavor) }></TableCell>
+                  </TableRow>
                 ) : null;
             })}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </Fragment>
   );
 
